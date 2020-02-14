@@ -5,8 +5,30 @@ public class Process {
     private int timeSpend;
 
     public Process(int totalWork) {
+        this.totalWork = 1000;
+    }
 
-        this.totalWork = totalWork;
+    public void simulateProcess(Stage stage) {
+        for(int i = 0; i < totalWork; i++) {
+
+            iterations += stage.work();
+
+        }
+
+        simulationFeedback(stage);
+
+        iterations = 0;
+    }
+
+    public void simulationFeedback(Stage stage) {
+
+        // Ved ikke hvorfor de bliver 1.0 og 0
+        double avgIterations = iterations/totalWork;
+        double avgTimeSpend = stage.getTimeFrame()/totalWork;
+
+        System.out.println("\nIterations during " + stage.getName() + ": " + iterations);
+        System.out.println("Time spend: " + stage.getTimeFrame()*iterations + " weeks");
+        System.out.println("Projects dropped: " + (stage.getnInputs() - stage.getnOutputs()));
     }
 
     public int getTotalWork() {

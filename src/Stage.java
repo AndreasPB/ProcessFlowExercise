@@ -7,30 +7,42 @@ public class Stage {
     private int nInputs;
     private int nOutputs;
     private double succesRate;
+    private int maxIterations;
+
+    public Stage(String name, int timeFrame, double succesRate, int maxIterations) {
+        this.name = name;
+        this.timeFrame = timeFrame;
+        this.succesRate = succesRate;
+        this.maxIterations = maxIterations;
+    }
 
     public Stage(String name, int timeFrame, double succesRate) {
         this.name = name;
         this.timeFrame = timeFrame;
-        // this.nInputs = nInputs;
-        // this.nOutputs = nOutputs;
         this.succesRate = succesRate;
-
+        this.maxIterations = 100;
     }
 
-    public int startWorking() {
+    public int work() {
         Random rand = new Random();
-        double projectQuality;
+        double stageQuality = rand.nextDouble();
         int iterations = 0;
+        boolean stageSuccess;
 
-        do {
+        // Starter om hver gang successRate er lavere end stageQuality
+        while(succesRate < stageQuality) {
+            nInputs++;
             iterations++;
 
+            if(maxIterations < iterations) {
+                // Projektet mislykkedet og skrottet = intet output
+            } else {
+                nOutputs++;
+            }
+            stageQuality = rand.nextDouble();
+        }
 
-            projectQuality = rand.nextDouble();
-            System.out.println(projectQuality);
-        } while (succesRate > projectQuality);
-
-        return nOutputs;
+        return iterations;
     }
 
     public String getName() {
